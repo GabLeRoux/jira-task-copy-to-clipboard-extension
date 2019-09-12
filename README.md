@@ -9,3 +9,6 @@ Selecting the issue id and title always inserts an endline between them, this wa
 ## TODO
 
 Don't hardcode jira urls in the rights and use something like Toggl's extension which allows adding dynamic rights from settings page.
+
+[MIT](LICENSE.md) © [Gabriel Le Breton](https://gableroux.com)
+
