@@ -50,9 +50,9 @@ function isLegacy() {
 
 function getDestination() {
     if (isLegacy()) {
-        return $(".aui-page-header-main");
+        return $("#stalker .aui-nav.aui-nav-breadcrumbs");
     } else {
-        return $(".hWJdye");
+        return $("#jira-issue-header .BreadcrumbsContainer-tgj96-0.eiYreW");
     }
 }
 
