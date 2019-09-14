@@ -6,7 +6,7 @@ Adds a `Copy` button beside task titles to copy the task id and task title.
 
 ![extension demo](doc/extension-demo.png)
 
-Clicking above button would copy the following: `AWS-42 Configure Jira workflow triggers with Github`
+Clicking above `Copy` button copies the following: `AWS-42 Configure Jira workflow triggers with Github`
 
 ## Why?
 
