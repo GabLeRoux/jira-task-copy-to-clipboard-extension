@@ -18,7 +18,8 @@
   "content_scripts": [
     {
       "matches": [
-        "http://tlmlinjira01.tlmgo.com:8080/*"
+        "http://tlmlinjira01.tlmgo.com:8080/*",
+        "https://*.atlassian.net/*"
       ],
       "js": [
         "js/jquery/jquery.js",

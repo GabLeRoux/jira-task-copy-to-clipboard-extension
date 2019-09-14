@@ -25,25 +25,50 @@ function copyTextToClipboard(text) {
 }
 
 function getTextToCopy() {
-	return $("#key-val").data('issue-key') + " " + $("#summary-val").text();
+    var issueId, issueTitle;
+    if (isLegacy()) {
+        issueId = $("#key-val").data('issue-key');
+        issueTitle = $("#summary-val").text();
+    } else {
+        issueId = $("#jira-issue-header a.css-1i1hrbk span.css-eaycls").text();
+        issueTitle = $("#helpPanelContainer h1.sc-duVqjH.lmSsxY").text();
+    }
+    return issueId + " " + issueTitle;
 }
 
 function createCopyButton() {
-	return $("<h1 id='copy-issue' title='Copy issue key and title' class='aui-button toolbar-trigger issueaction-custom-copy'><span class='trigger-label'>Copy</span></h1>");
+    if (isLegacy()) {
+        return $("<h1 id='copy-issue' title='Copy issue key and title' class='aui-button toolbar-trigger issueaction-custom-copy'><span class='trigger-label'>Copy</span></h1>");
+    } else {
+        return $("<a id='copy-issue' title='Copy issue key and title' class='aui-button toolbar-trigger issueaction-custom-copy'><span class='trigger-label'>Copy</span></a>");
+    }
+}
+
+function isLegacy() {
+    return $('.aui-page-header-main').length >= 1
+}
+
+function getDestination() {
+    if (isLegacy()) {
+        return $(".aui-page-header-main");
+    } else {
+        return $(".hWJdye");
+    }
 }
 
 function attachCopybutton() {
-	var copyButton = createCopyButton();
-	copyButton.click(function() {
-		copyAction();
-	});
-	var destination = $(".aui-page-header-main");
-	destination.append(copyButton);
+    var copyButton = createCopyButton();
+    copyButton.click(function () {
+        copyAction();
+    });
+    var destination = getDestination();
+    destination.append(copyButton);
 }
 
 function copyAction() {
-	copyTextToClipboard(getTextToCopy());
-	console.log("[jira-task-copy-to-clipboard] copied '" + getTextToCopy() + "' to clipboard");
+    var text = getTextToCopy();
+    copyTextToClipboard(text);
+    console.log("[jira-task-copy-to-clipboard] copied '" + getTextToCopy() + "' to clipboard");
 }
 
 chrome.extension.sendMessage({}, function (response) {
@@ -51,9 +76,9 @@ chrome.extension.sendMessage({}, function (response) {
         if (document.readyState === "complete") {
             clearInterval(readyStateCheckInterval);
             var textToCopy = getTextToCopy();
-			console.log("[jira-task-copy-to-clipboard] " + textToCopy);
-			attachCopybutton();
-			console.log("[jira-task-copy-to-clipboard] added copy button");
+            console.log("[jira-task-copy-to-clipboard] " + textToCopy);
+            attachCopybutton();
+            console.log("[jira-task-copy-to-clipboard] added copy button");
             console.log("[jira-task-copy-to-clipboard] injected");
         }
     }, 100);
