@@ -16,5 +16,7 @@ Selecting the issue id and title always inserts an endline between them, this wa
 
 See [issues](https://github.com/GabLeRoux/jira-task-copy-to-clipboard-extension/issues)
 
+## License
+
 [MIT](LICENSE.md) © [Gabriel Le Breton](https://gableroux.com)
 
