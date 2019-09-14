@@ -56,6 +56,6 @@ chrome.extension.sendMessage({}, function (response) {
 			console.log("[jira-task-copy-to-clipboard] added copy button");
             console.log("[jira-task-copy-to-clipboard] injected");
         }
-    }, 10);
+    }, 100);
 });
 
