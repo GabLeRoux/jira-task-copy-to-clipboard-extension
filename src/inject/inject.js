@@ -56,7 +56,7 @@ function getDestination() {
     }
 }
 
-function attachCopybutton() {
+function attachCopyButton() {
     var copyButton = createCopyButton();
     copyButton.click(function () {
         copyAction();
@@ -71,15 +71,18 @@ function copyAction() {
     console.log("[jira-task-copy-to-clipboard] copied '" + getTextToCopy() + "' to clipboard");
 }
 
+function injectButton() {
+    var textToCopy = getTextToCopy();
+    console.log("[jira-task-copy-to-clipboard] " + textToCopy);
+    attachCopyButton();
+    console.log("[jira-task-copy-to-clipboard] injected copy button");
+}
+
 chrome.extension.sendMessage({}, function (response) {
-    var readyStateCheckInterval = setInterval(function () {
-        if (document.readyState === "complete") {
-            clearInterval(readyStateCheckInterval);
-            var textToCopy = getTextToCopy();
-            console.log("[jira-task-copy-to-clipboard] " + textToCopy);
-            attachCopybutton();
-            console.log("[jira-task-copy-to-clipboard] added copy button");
-            console.log("[jira-task-copy-to-clipboard] injected");
+    // TODO: improve this, it's not very efficient but it works
+    setInterval(function () {
+        if ($('#copy-issue').length < 1) {
+            injectButton();
         }
     }, 100);
 });
