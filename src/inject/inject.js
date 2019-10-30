@@ -32,6 +32,12 @@ function getTextToCopy() {
     } else {
         issueId = $("#jira-issue-header a.css-1i1hrbk span.css-eaycls").text();
         issueTitle = $("#helpPanelContainer h1.sc-duVqjH.lmSsxY").text();
+        if (issueTitle === '') {
+            issueTitle = $("#helpPanelContainer h1.sc-iHfyOJ.eisLaU").text();
+        }
+        if (issueTitle === '') {
+            issueTitle = $('h1[data-test-id="issue.views.issue-base.foundation.summary.heading"]').text();
+        }
     }
     return issueId + " " + issueTitle;
 }
