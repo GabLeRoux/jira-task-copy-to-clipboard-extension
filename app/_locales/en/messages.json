@@ -1,0 +1,18 @@
+{
+  "appName": {
+    "message": "jira task copy to clipboard",
+    "description": "The name of the application"
+  },
+  "appShortName": {
+    "message": "jira-copy-id",
+    "description": "The short_name (maximum of 12 characters recommended) is a short version of the app's name."
+  },
+  "appDescription": {
+    "message": "Add a copy button beside jira task titles to copy the task id and task title",
+    "description": "The description of the application"
+  },
+  "browserActionTitle": {
+    "message": "jira task copy to clipboard",
+    "description": "The title of the browser action button"
+  }
+}

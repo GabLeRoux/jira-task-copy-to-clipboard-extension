@@ -1,5 +1,3 @@
-# idea IDE
-.idea/*
-!.idea/codeStyles/
-!.idea/runConfigurations/
-!.idea/inspectionProfiles/
+node_modules/
+dist/
+packages/
