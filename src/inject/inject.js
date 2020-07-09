@@ -30,7 +30,7 @@ function getTextToCopy() {
         issueId = $("#key-val").data('issue-key');
         issueTitle = $("#summary-val").text();
     } else {
-        issueId = $("#jira-issue-header a.css-1i1hrbk span.css-eaycls").text();
+        issueId = $("#jira-issue-header a.css-1i1hrbk span.css-eaycls").last().text();
         issueTitle = $("#helpPanelContainer h1.sc-duVqjH.lmSsxY").text();
         if (issueTitle === '') {
             issueTitle = $("#helpPanelContainer h1.sc-iHfyOJ.eisLaU").text();
