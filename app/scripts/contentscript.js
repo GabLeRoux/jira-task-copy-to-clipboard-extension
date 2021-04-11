@@ -1,4 +1,5 @@
 function copyTextToClipboard(text) {
+    console.log("[jira-task-copy-to-clipboard] copyTextToClipboard");
     //Create a textbox field where we can insert text to.
     var copyFrom = document.createElement("textarea");
 
@@ -25,48 +26,59 @@ function copyTextToClipboard(text) {
 }
 
 function getTextToCopy() {
+    console.log("[jira-task-copy-to-clipboard] getTextToCopy");
     var issueId, issueTitle;
     if (isLegacy()) {
-        issueId = $("#key-val").data('issue-key');
-        issueTitle = $("#summary-val").text();
+        issueId = document.querySelectorAll("#key-val")[0].childNodes[0].nodeValue; //.data('issue-key');
+        issueTitle = document.querySelectorAll("#summary-val")[0].childNodes[0].nodeValue;
     } else {
-        issueId = $("#jira-issue-header a.css-1i1hrbk span.css-eaycls").text();
-        issueTitle = $("#helpPanelContainer h1.sc-duVqjH.lmSsxY").text();
-        if (issueTitle === '') {
-            issueTitle = $("#helpPanelContainer h1.sc-iHfyOJ.eisLaU").text();
-        }
-        if (issueTitle === '') {
-            issueTitle = $('h1[data-test-id="issue.views.issue-base.foundation.summary.heading"]').text();
-        }
+        issueId = document.querySelectorAll("[data-test-id='issue.views.issue-base.foundation.breadcrumbs.breadcrumb-current-issue-container']")[0].getElementsByTagName("span")[1].innerText;
+        issueTitle = issueTitle = document.querySelectorAll('h1[data-test-id="issue.views.issue-base.foundation.summary.heading"]')[0].innerText;
     }
     return issueId + " " + issueTitle;
 }
 
 function createCopyButton() {
-    if (isLegacy()) {
-        return $("<h1 id='copy-issue' title='Copy issue key and title' class='aui-button toolbar-trigger issueaction-custom-copy'><span class='trigger-label'>Copy</span></h1>");
-    } else {
-        return $("<a id='copy-issue' title='Copy issue key and title' class='aui-button toolbar-trigger issueaction-custom-copy'><span class='trigger-label'>Copy</span></a>");
-    }
+    console.log("[jira-task-copy-to-clipboard] createCopyButton");
+
+    let button = document.createElement("span");
+    button.setAttribute('id', "copy-issue");
+    button.setAttribute('title', "Copy issue key and title");
+    button.setAttribute('class', "aui-button toolbar-trigger issueaction-custom-copy");
+    let span = document.createElement("span");
+    let t = document.createTextNode("Copy issue");
+    span.appendChild(t);
+    button.appendChild(span);
+    return button;
+
+    // let legacyCopyButton = "<h1 id='copy-issue' title='Copy issue key and title' class='aui-button toolbar-trigger issueaction-custom-copy'><span class='trigger-label'>Copy</span></h1>";
+    // let copyButton = "<a id='copy-issue' title='Copy issue key and title' class='aui-button toolbar-trigger issueaction-custom-copy'><span class='trigger-label'>Copy</span></a>";
+    // if (isLegacy()) {
+    //     return legacyCopyButton;
+    // } else {
+    //     return copyButton;
+    // }
 }
 
 function isLegacy() {
-    return $('.aui-page-header-main').length >= 1
+    let isLegacy = document.querySelectorAll('.aui-page-header-main').length >= 1;
+    console.log("[jira-task-copy-to-clipboard] isLegacy: ", isLegacy);
+    return isLegacy;
 }
 
 function getDestination() {
+    console.log("[jira-task-copy-to-clipboard] getDestination");
     if (isLegacy()) {
-        return $("#stalker .aui-nav.aui-nav-breadcrumbs");
+        return document.document.querySelectorAll("#stalker .aui-nav.aui-nav-breadcrumbs")[0];
     } else {
-        return $("#jira-issue-header .BreadcrumbsContainer-tgj96-0.eiYreW");
+        return document.querySelectorAll("[data-test-id='issue.views.issue-base.foundation.breadcrumbs.breadcrumb-current-issue-container']")[0];
     }
 }
 
 function attachCopyButton() {
+    console.log("[jira-task-copy-to-clipboard] attachCopyButton");
     var copyButton = createCopyButton();
-    copyButton.click(function () {
-        copyAction();
-    });
+    copyButton.addEventListener("click", copyAction);
     var destination = getDestination();
     destination.append(copyButton);
 }
@@ -78,18 +90,29 @@ function copyAction() {
 }
 
 function injectButton() {
+    console.log("[jira-task-copy-to-clipboard] injectButton");
     var textToCopy = getTextToCopy();
     console.log("[jira-task-copy-to-clipboard] " + textToCopy);
     attachCopyButton();
     console.log("[jira-task-copy-to-clipboard] injected copy button");
 }
 
-chrome.extension.sendMessage({}, function (response) {
+let delayButtonInjection = function (response) {
+    console.log('[jira-task-copy-to-clipboard] delayButtonInjection')
     // TODO: improve this, it's not very efficient but it works
-    setInterval(function () {
-        if ($('#copy-issue').length < 1) {
+    let intervalHandler = function () {
+        console.log('[jira-task-copy-to-clipboard] setInterval')
+        if (!document.getElementById('copy-issue')) {
+            console.log('[jira-task-copy-to-clipboard] #copy-issue cannot be found, injecting')
             injectButton();
+            clearInterval(interval);
+        } else {
+            console.log('[jira-task-copy-to-clipboard] #copy-issue found')
         }
-    }, 100);
-});
+    };
+    let interval = setInterval(intervalHandler, 100);
+};
+browser.runtime.sendMessage({}, delayButtonInjection);
 
+console.log('[jira-task-copy-to-clipboard] contentscript loaded')
+// delayButtonInjection();

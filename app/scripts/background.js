@@ -6,4 +6,4 @@ browser.tabs.onUpdated.addListener(async (tabId) => {
   browser.pageAction.show(tabId)
 })
 
-console.log(`'Allo 'Allo! Event Page for Page Action`)
+console.log(`[jira-task-copy-to-clipboard] background loaded`)

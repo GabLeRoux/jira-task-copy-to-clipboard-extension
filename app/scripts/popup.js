@@ -1,1 +1,1 @@
-console.log(`'Allo 'Allo! Popup`)
+console.log(`[jira-task-copy-to-clipboard] popup loaded`)

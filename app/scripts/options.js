@@ -1,1 +1,1 @@
-console.log(`'Allo 'Allo! Options`)
+console.log(`[jira-task-copy-to-clipboard] options loaded`)

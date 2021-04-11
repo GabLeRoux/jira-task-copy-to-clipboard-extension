@@ -4,7 +4,11 @@
   "description": "Add a copy button beside jira task titles to copy the task id and task title",
   "scripts": {
     "dev": "webextension-toolbox dev",
-    "build": "webextension-toolbox build"
+    "dev:chrome": "webextension-toolbox dev chrome",
+    "dev:firefox": "webextension-toolbox dev firefox",
+    "build": "webextension-toolbox build",
+    "build:firefox": "webextension-toolbox build firefox",
+    "build:chrome": "webextension-toolbox build chrome"
   },
   "devDependencies": {
     "webextension-toolbox": "latest"
