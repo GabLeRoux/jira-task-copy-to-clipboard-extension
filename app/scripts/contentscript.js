@@ -40,7 +40,6 @@ function getTextToCopy() {
 
 function createCopyButton() {
     console.log("[jira-task-copy-to-clipboard] createCopyButton");
-
     let button = document.createElement("span");
     button.setAttribute('id', "copy-issue");
     button.setAttribute('title', "Copy issue key and title");
@@ -50,14 +49,6 @@ function createCopyButton() {
     span.appendChild(t);
     button.appendChild(span);
     return button;
-
-    // let legacyCopyButton = "<h1 id='copy-issue' title='Copy issue key and title' class='aui-button toolbar-trigger issueaction-custom-copy'><span class='trigger-label'>Copy</span></h1>";
-    // let copyButton = "<a id='copy-issue' title='Copy issue key and title' class='aui-button toolbar-trigger issueaction-custom-copy'><span class='trigger-label'>Copy</span></a>";
-    // if (isLegacy()) {
-    //     return legacyCopyButton;
-    // } else {
-    //     return copyButton;
-    // }
 }
 
 function isLegacy() {
@@ -84,14 +75,14 @@ function attachCopyButton() {
 }
 
 function copyAction() {
-    var text = getTextToCopy();
+    const text = getTextToCopy();
     copyTextToClipboard(text);
     console.log("[jira-task-copy-to-clipboard] copied '" + getTextToCopy() + "' to clipboard");
 }
 
 function injectButton() {
     console.log("[jira-task-copy-to-clipboard] injectButton");
-    var textToCopy = getTextToCopy();
+    const textToCopy = getTextToCopy();
     console.log("[jira-task-copy-to-clipboard] " + textToCopy);
     attachCopyButton();
     console.log("[jira-task-copy-to-clipboard] injected copy button");
@@ -115,4 +106,3 @@ let delayButtonInjection = function (response) {
 browser.runtime.sendMessage({}, delayButtonInjection);
 
 console.log('[jira-task-copy-to-clipboard] contentscript loaded')
-// delayButtonInjection();
