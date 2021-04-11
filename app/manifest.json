@@ -31,6 +31,9 @@
     {
       "matches": [
         "http://tlmlinjira01.tlmgo.com:8080/*",
+        "https://tlmlinjira01.tlmgo.com:8080/*",
+        "http://jira.tlmgo.com/*",
+        "https://jira.tlmgo.com/*",
         "https://*.atlassian.net/*"
       ],
       "css": [

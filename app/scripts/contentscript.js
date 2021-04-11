@@ -69,7 +69,7 @@ function isLegacy() {
 function getDestination() {
     console.log("[jira-task-copy-to-clipboard] getDestination");
     if (isLegacy()) {
-        return document.document.querySelectorAll("#stalker .aui-nav.aui-nav-breadcrumbs")[0];
+        return document.querySelectorAll("#stalker .aui-nav.aui-nav-breadcrumbs")[0];
     } else {
         return document.querySelectorAll("[data-test-id='issue.views.issue-base.foundation.breadcrumbs.breadcrumb-current-issue-container']")[0];
     }
